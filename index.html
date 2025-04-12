@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Debunk Dash</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    h1, h2 {
+      margin-bottom: 10px;
+    }
+
+    #game-container, #end-screen {
+      display: none;
+      text-align: center;
+      max-width: 600px;
+      width: 100%;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    #start-screen {
+      display: block; /* ✅ Show this section on load */
+      text-align: center;
+      max-width: 600px;
+      width: 100%;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    #timer, #score {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    #question-box {
+      margin: 20px 0;
+    }
+
+    #question-text {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    .answer-btn {
+      margin: 10px;
+      padding: 12px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 8px;
+      background-color: #007BFF;
+      color: white;
+      transition: background-color 0.2s;
+    }
+
+    .answer-btn:hover {
+      background-color: #0056b3;
+    }
+
+    button#start-btn, button#restart-btn {
+      padding: 12px 25px;
+      font-size: 18px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button#start-btn:hover, button#restart-btn:hover {
+      background-color: #1e7e34;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="start-screen">
+    <h1>Debunk Dash</h1>
+    <p>Answer as many misinformation questions as you can in 60 seconds!</p>
+    <button id="start-btn">Start Game</button>
+  </div>
+
+  <div id="game-container">
+    <div id="timer">Time Left: 60s</div>
+    <div id="score">Score: 0</div>
+
+    <div id="question-box">
+      <p id="question-text"></p>
+      <div id="answer-buttons">
+        <button class="answer-btn" data-answer="true">True</button>
+        <button class="answer-btn" data-answer="false">False</button>
+        <button class="answer-btn" data-answer="fact-check">Fact-Check</button>
+        <button class="answer-btn" data-answer="ignore">Ignore</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="end-screen">
+    <h2>Time's Up!</h2>
+    <p>Your Score: <span id="final-score"></span></p>
+    <button id="restart-btn">Play Again</button>
+  </div>
+
+  <script>
+    const questions = [
+      { text: "Vaccines contain microchips.", correct: "false" },
+      { text: "This article has no source. What should you do?", correct: "fact-check" },
+      { text: "Study shows 5G causes COVID.", correct: "false" },
+      { text: "You see a viral post with no supporting evidence.", correct: "ignore" },
+      { text: "Breaking: Scientists discover that the moon is made of cheese.", correct: "false" },
+      { text: "A post claims a miracle cure but links to no scientific source.", correct: "fact-check" },
+      { text: "A popular meme says 'The Earth is flat!' What should you do?", correct: "ignore" },
+      { text: "An article includes multiple reliable references. Is it trustworthy?", correct: "true" },
+      { text: "Click here to win a free iPhone!", correct: "ignore" }
+    ];
+
+    let score = 0;
+    let timeLeft = 60;
+    let timer;
+    let currentQuestion = {};
+
+    const startBtn = document.getElementById("start-btn");
+    const gameContainer = document.getElementById("game-container");
+    const questionText = document.getElementById("question-text");
+    const timerDisplay = document.getElementById("timer");
+    const scoreDisplay = document.getElementById("score");
+    const answerButtons = document.querySelectorAll(".answer-btn");
+    const endScreen = document.getElementById("end-screen");
+    const finalScore = document.getElementById("final-score");
+    const restartBtn = document.getElementById("restart-btn");
+    const startScreen = document.getElementById("start-screen");
+
+    startBtn.onclick = startGame;
+    restartBtn.onclick = startGame;
+
+    function startGame() {
+      startScreen.style.display = "none";
+      endScreen.style.display = "none";
+      gameContainer.style.display = "block";
+      score = 0;
+      timeLeft = 60;
+      scoreDisplay.textContent = "Score: 0";
+      timerDisplay.textContent = `Time Left: ${timeLeft}s`;
+      nextQuestion();
+      startTimer();
+    }
+
+    function startTimer() {
+      clearInterval(timer);
+      timer = setInterval(() => {
+        timeLeft--;
+        timerDisplay.textContent = `Time Left: ${timeLeft}s`;
+        if (timeLeft <= 0) {
+          clearInterval(timer);
+          endGame();
+        }
+      }, 1000);
+    }
+
+    function nextQuestion() {
+      currentQuestion = questions[Math.floor(Math.random() * questions.length)];
+      questionText.textContent = currentQuestion.text;
+    }
+
+    answerButtons.forEach(button => {
+      button.onclick = () => {
+        const selected = button.dataset.answer;
+        if (selected === currentQuestion.correct) {
+          score++;
+          scoreDisplay.textContent = `Score: ${score}`;
+        }
+        nextQuestion();
+      };
+    });
+
+    function endGame() {
+      gameContainer.style.display = "none";
+      endScreen.style.display = "block";
+      finalScore.textContent = score;
+    }
+  </script>
+</body>
+</html>
