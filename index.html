@@ -7,8 +7,8 @@
   <style>
     body {
       font-family: 'Open Sans', sans-serif;
-      background-color: #4B0082; /* Indigo */
-      color: #FFFFFF;
+      background-color: #D0F0FF; /* Light blue */
+      color: #273C75; /* Deep blue */
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -18,16 +18,16 @@
     }
 
     h1, h2, p, button {
-      color: #FFFFFF;
+      color: #273C75;
     }
 
     #start-screen, #game-container, #end-screen {
       max-width: 600px;
       width: 100%;
-      background: #6A5ACD; /* SlateBlue */
+      background: #B4B0FF; /* Light purple */
       padding: 20px;
       border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       text-align: center;
     }
 
@@ -53,19 +53,19 @@
       cursor: pointer;
       border: none;
       border-radius: 8px;
-      background-color: #1E90FF; /* Dodger Blue */
-      color: #FFFFFF;
+      background-color: #3AC7FF; /* Bright blue */
+      color: #fff;
       transition: background-color 0.3s;
     }
 
     .answer-btn:hover {
-      background-color: #9370DB; /* Medium Purple */
+      background-color: #8870FF; /* Soft purple/blue */
     }
 
     button#start-btn, button#restart-btn {
       padding: 12px 25px;
       font-size: 18px;
-      background-color: #1E90FF;
+      background-color: #3AC7FF;
       color: white;
       border: none;
       border-radius: 8px;
@@ -73,7 +73,7 @@
     }
 
     button#start-btn:hover, button#restart-btn:hover {
-      background-color: #9370DB;
+      background-color: #8870FF;
     }
 
     .question-img {
@@ -98,7 +98,7 @@
   </div>
 
   <div id="end-screen">
-    <h2>Game Over!</h2>
+    <h2>Time’s Up!</h2>
     <p>Your Score: <span id="final-score"></span></p>
     <button id="restart-btn">Play Again</button>
   </div>
@@ -128,7 +128,7 @@
       {
         text: "The Pew Research Center posted this visualization regarding unemployment rates.",
         media: "https://www.pewresearch.org/wp-content/uploads/sites/20/2013/08/FT_13.08.202_BlackWhiteUnemployment.png",
-        correct: "trust"
+        correct: "verify"
       },
       {
         text: "A news outlet posted this ground-breaking information.",
@@ -138,7 +138,7 @@
       {
         text: "The Hacker News posted an article explaining a new phishing attack that sends online users emails that look like Google. Is this trustworthy?",
         media: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiooJOuE7X8Hqy2CETHt5pV6Rb82Ofiqwco234N6vZWXTxRslxkOqQ5l49DWdJfXs3hr2GfzPjuuCZQGDbJr1BrrrAJWKMuRogWdTQVQbWmyoXmm_KmvrA62xhlCcYRANijjgLKmUvyhPs800VU-huHm5_xGb_wCb3rvacmHRRXYtacpJKx4wf14IZlugwi/s728-rw-e365/gmail.jpg",
-        correct: "trust"
+        correct: "reject"
       },
       {
         text: "You opened Twitter and found this.",
