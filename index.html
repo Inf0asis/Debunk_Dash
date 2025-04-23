@@ -3,26 +3,28 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Debunk Dash – Media Version</title>
+  <title>Debunk Dash</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
+      font-family: 'Open Sans', sans-serif;
+      background-color: #FDA557ff;
+      color: #FEFEFEff;
       display: flex;
       flex-direction: column;
       align-items: center;
       padding: 20px;
       margin: 0;
+      text-align: center;
     }
 
-    h1 {
-      margin-bottom: 10px;
+    h1, h2, p, button {
+      color: #FEFEFEff;
     }
 
     #start-screen, #game-container, #end-screen {
       max-width: 600px;
       width: 100%;
-      background: white;
+      background: #35f048;
       padding: 20px;
       border-radius: 12px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
@@ -51,19 +53,19 @@
       cursor: pointer;
       border: none;
       border-radius: 8px;
-      background-color: #007BFF;
-      color: white;
+      background-color: #3498db;
+      color: #FEFEFEff;
       transition: background-color 0.2s;
     }
 
     .answer-btn:hover {
-      background-color: #0056b3;
+      background-color: #FDA557ff;
     }
 
     button#start-btn, button#restart-btn {
       padding: 12px 25px;
       font-size: 18px;
-      background-color: #28a745;
+      background-color: #3498db;
       color: white;
       border: none;
       border-radius: 8px;
@@ -71,7 +73,7 @@
     }
 
     button#start-btn:hover, button#restart-btn:hover {
-      background-color: #1e7e34;
+      background-color: #FDA557ff;
     }
 
     .question-img {
@@ -84,17 +86,15 @@
 <body>
 
   <div id="start-screen">
-    <h1>Debunk Dash: Media Edition</h1>
+    <h1>Debunk Dash</h1>
     <p>Look at each post or image and decide what to do. You have 60 seconds!</p>
-    <button id="start-btn">Start Game</button>
+    <button id="start-btn">Start Game!</button>
   </div>
 
   <div id="game-container">
     <div id="timer">Time Left: 60s</div>
     <div id="score">Score: 0</div>
-    <div id="question-box">
-      <!-- Image + Question + Buttons will appear here -->
-    </div>
+    <div id="question-box"></div>
   </div>
 
   <div id="end-screen">
@@ -108,29 +108,63 @@
       {
         text: "This viral image claims to show a new planet visible from Earth. Is it real?",
         media: "https://www.earth.com/assets/_next/image/?url=https%3A%2F%2Fcff2.earth.com%2Fuploads%2F2025%2F03%2F18072736%2Fsuper-venus_Enaiposha_GJ-1214b_credit-NASA_1m-1400x850.jpg&w=1200&q=75",
-        correct: "fact-check"
+        correct: "verify"
       },
       {
-        text: "This tweet says the CDC banned lemon water because it cures cancer. What should you do?",
-        media: "https://sdmntprsouthcentralus.oaiusercontent.com/files/00000000-f738-61f7-90a6-58efb331112e/raw?se=2025-04-12T23%3A37%3A06Z&sp=r&sv=2024-08-04&sr=b&scid=46631cff-5e63-5043-bc30-5add3382f626&skoid=dfdaf859-26f6-4fed-affc-1befb5ac1ac2&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-04-12T21%3A49%3A21Z&ske=2025-04-13T21%3A49%3A21Z&sks=b&skv=2024-08-04&sig=eLlJsxA7V2UCMdgLHbFKSA4Aj2xmcujRyzcsYGUbLfE%3D",
-        correct: "ignore"
+        text: "The National Institute on Aging posted an infographic.",
+        media: "https://www.nia.nih.gov/sites/default/files/2023-01/difference-cold-flu-covid-19.png",
+        correct: "trust"
       },
       {
-        text: "A trusted outlet posted this article with peer-reviewed sources.",
+        text: "A tweet says that insulin is now free. What should you do?",
+        media: "https://img.semafor.com/b9b8145dc9444b5be8ce02e28130b19cc45e7fee-5500x3359.png?w=1920&q=75&auto=format",
+        correct: "reject"
+      },
+      {
+        text: "This Instagram post by the NBA declares that the Boston Celtics won the championship. Is this a trusted source?",
+        media: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbncAR3wIXz0ZPWzd_2kEDQIQBfWYCuKBMIw&s",
+        correct: "trust"
+      },
+      {
+        text: "The Pew Research Center posted this visualization regarding unemployment rates.",
+        media: "https://www.pewresearch.org/wp-content/uploads/sites/20/2013/08/FT_13.08.202_BlackWhiteUnemployment.png",
+        correct: "verify"
+      },
+      {
+        text: "A news outlet posted this ground-breaking information.",
         media: "https://time.com/redesign/_next/image/?url=https%3A%2F%2Fapi.time.com%2Fwp-content%2Fuploads%2F2025%2F04%2FTIM250512-Wolf-Cover-FINAL.jpg&w=3840&q=75",
-        correct: "true"
+        correct: "verify"
       },
       {
-        text: "This Facebook meme claims '5G towers are causing COVID-19 symptoms.'",
-        media: "https://sdmntprsouthcentralus.oaiusercontent.com/files/00000000-3e68-61f7-b261-db97a9468687/raw?se=2025-04-12T23%3A45%3A10Z&sp=r&sv=2024-08-04&sr=b&scid=55a57002-5631-58d7-8c5b-d8f8d7f25be1&skoid=dfdaf859-26f6-4fed-affc-1befb5ac1ac2&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-04-12T21%3A46%3A49Z&ske=2025-04-13T21%3A46%3A49Z&sks=b&skv=2024-08-04&sig=p%2BAQwzoWUb%2BhP3tjc1tblHgE7Yosz9Mi3i769mJQlC8%3D",
-        correct: "false"
+        text: "The Hacker News posted an article explaining a new phishing attack that sends online users emails that look like Google. Is this trustworthy?",
+        media: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiooJOuE7X8Hqy2CETHt5pV6Rb82Ofiqwco234N6vZWXTxRslxkOqQ5l49DWdJfXs3hr2GfzPjuuCZQGDbJr1BrrrAJWKMuRogWdTQVQbWmyoXmm_KmvrA62xhlCcYRANijjgLKmUvyhPs800VU-huHm5_xGb_wCb3rvacmHRRXYtacpJKx4wf14IZlugwi/s728-rw-e365/gmail.jpg",
+        correct: "reject"
+      },
+      {
+        text: "You opened Twitter and found this.",
+        media: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZkB_uE24xdC6Aqnsr_VBDmtAO7kPe81NzhQ&s",
+        correct: "verify"
+      },
+      {
+        text: "While scrolling through Reddit, you found this statistic.",
+        media: "https://web.stevenson.edu/mbranson/m4tp/version1/fake-news/images/robberies.png",
+        correct: "reject"
+      },
+      {
+        text: "Lebron James requests to be traded in a twitter post.",
+        media: "https://www.casino.org/news/wp-content/uploads/2022/11/lebron.jpg",
+        correct: "reject"
       }
     ];
+
+    const choices = ["trust", "reject", "verify"];
 
     let score = 0;
     let timeLeft = 60;
     let timer;
     let currentQuestion = {};
+    let remainingQuestions = [];
+
     const startBtn = document.getElementById("start-btn");
     const restartBtn = document.getElementById("restart-btn");
     const gameContainer = document.getElementById("game-container");
@@ -141,8 +175,6 @@
     const finalScore = document.getElementById("final-score");
     const questionBox = document.getElementById("question-box");
 
-    const choices = ["true", "false", "fact-check", "ignore"];
-
     startBtn.onclick = startGame;
     restartBtn.onclick = startGame;
 
@@ -152,6 +184,7 @@
       gameContainer.style.display = "block";
       score = 0;
       timeLeft = 60;
+      remainingQuestions = [...questions]; // clone the full list
       scoreDisplay.textContent = "Score: 0";
       timerDisplay.textContent = `Time Left: ${timeLeft}s`;
       startTimer();
@@ -171,14 +204,21 @@
     }
 
     function nextQuestion() {
-      questionBox.innerHTML = ""; // clear previous
+      questionBox.innerHTML = "";
 
-      currentQuestion = questions[Math.floor(Math.random() * questions.length)];
+      if (remainingQuestions.length === 0) {
+        clearInterval(timer);
+        endGame();
+        return;
+      }
+
+      const randomIndex = Math.floor(Math.random() * remainingQuestions.length);
+      currentQuestion = remainingQuestions.splice(randomIndex, 1)[0];
 
       if (currentQuestion.media) {
         const img = document.createElement("img");
         img.src = currentQuestion.media;
-        img.alt = "Question image";
+        img.alt = "";
         img.classList.add("question-img");
         questionBox.appendChild(img);
       }
