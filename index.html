@@ -7,8 +7,8 @@
   <style>
     body {
       font-family: 'Open Sans', sans-serif;
-      background-color: #FDA557ff;
-      color: #FEFEFEff;
+      background-color: #4B0082; /* Indigo */
+      color: #FFFFFF;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -18,16 +18,16 @@
     }
 
     h1, h2, p, button {
-      color: #FEFEFEff;
+      color: #FFFFFF;
     }
 
     #start-screen, #game-container, #end-screen {
       max-width: 600px;
       width: 100%;
-      background: #35f048;
+      background: #6A5ACD; /* SlateBlue */
       padding: 20px;
       border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
       text-align: center;
     }
 
@@ -53,19 +53,19 @@
       cursor: pointer;
       border: none;
       border-radius: 8px;
-      background-color: #3498db;
-      color: #FEFEFEff;
-      transition: background-color 0.2s;
+      background-color: #1E90FF; /* Dodger Blue */
+      color: #FFFFFF;
+      transition: background-color 0.3s;
     }
 
     .answer-btn:hover {
-      background-color: #FDA557ff;
+      background-color: #9370DB; /* Medium Purple */
     }
 
     button#start-btn, button#restart-btn {
       padding: 12px 25px;
       font-size: 18px;
-      background-color: #3498db;
+      background-color: #1E90FF;
       color: white;
       border: none;
       border-radius: 8px;
@@ -73,7 +73,7 @@
     }
 
     button#start-btn:hover, button#restart-btn:hover {
-      background-color: #FDA557ff;
+      background-color: #9370DB;
     }
 
     .question-img {
@@ -87,12 +87,12 @@
 
   <div id="start-screen">
     <h1>Debunk Dash</h1>
-    <p>Look at each post or image and decide what to do. You have 60 seconds!</p>
+    <p>Look at each post or image and decide what to do. You have 40 seconds!</p>
     <button id="start-btn">Start Game!</button>
   </div>
 
   <div id="game-container">
-    <div id="timer">Time Left: 60s</div>
+    <div id="timer">Time Left: 40s</div>
     <div id="score">Score: 0</div>
     <div id="question-box"></div>
   </div>
@@ -138,7 +138,7 @@
       {
         text: "The Hacker News posted an article explaining a new phishing attack that sends online users emails that look like Google. Is this trustworthy?",
         media: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiooJOuE7X8Hqy2CETHt5pV6Rb82Ofiqwco234N6vZWXTxRslxkOqQ5l49DWdJfXs3hr2GfzPjuuCZQGDbJr1BrrrAJWKMuRogWdTQVQbWmyoXmm_KmvrA62xhlCcYRANijjgLKmUvyhPs800VU-huHm5_xGb_wCb3rvacmHRRXYtacpJKx4wf14IZlugwi/s728-rw-e365/gmail.jpg",
-        correct: "reject"
+        correct: "trust"
       },
       {
         text: "You opened Twitter and found this.",
@@ -160,7 +160,7 @@
     const choices = ["trust", "reject", "verify"];
 
     let score = 0;
-    let timeLeft = 60;
+    let timeLeft = 40;
     let timer;
     let currentQuestion = {};
     let remainingQuestions = [];
@@ -183,8 +183,8 @@
       endScreen.style.display = "none";
       gameContainer.style.display = "block";
       score = 0;
-      timeLeft = 60;
-      remainingQuestions = [...questions]; // clone the full list
+      timeLeft = 40;
+      remainingQuestions = [...questions];
       scoreDisplay.textContent = "Score: 0";
       timerDisplay.textContent = `Time Left: ${timeLeft}s`;
       startTimer();
