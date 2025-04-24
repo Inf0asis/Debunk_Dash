@@ -3,32 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Debunk Dash</title>
+  <title>Debunk Dash – Retro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: 'Open Sans', sans-serif;
-      background-color: #D0F0FF; /* Light blue */
-      color: #273C75; /* Deep blue */
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background: url("background.jpg") no-repeat center center fixed;
+      background-size: cover;
+      color: #FF9F1C;
       display: flex;
       flex-direction: column;
       align-items: center;
       padding: 20px;
-      margin: 0;
       text-align: center;
     }
 
     h1, h2, p, button {
-      color: #273C75;
+      color: #FF9F1C;
     }
 
     #start-screen, #game-container, #end-screen {
       max-width: 600px;
       width: 100%;
-      background: #B4B0FF; /* Light purple */
+      background: rgba(46, 0, 62, 0.85); /* translucent purple */
       padding: 20px;
       border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      text-align: center;
+      box-shadow: 0 0 20px #FF9F1C;
     }
 
     #game-container, #end-screen {
@@ -53,19 +54,20 @@
       cursor: pointer;
       border: none;
       border-radius: 8px;
-      background-color: #3AC7FF; /* Bright blue */
+      background-color: #FF4D6D;
       color: #fff;
-      transition: background-color 0.3s;
+      transition: background-color 0.3s, box-shadow 0.3s;
     }
 
     .answer-btn:hover {
-      background-color: #8870FF; /* Soft purple/blue */
+      background-color: #FFB627;
+      box-shadow: 0 0 10px #FFB627;
     }
 
     button#start-btn, button#restart-btn {
       padding: 12px 25px;
       font-size: 18px;
-      background-color: #3AC7FF;
+      background-color: #FF4D6D;
       color: white;
       border: none;
       border-radius: 8px;
@@ -73,13 +75,14 @@
     }
 
     button#start-btn:hover, button#restart-btn:hover {
-      background-color: #8870FF;
+      background-color: #FFB627;
     }
 
     .question-img {
       max-width: 100%;
       border-radius: 10px;
       margin-bottom: 15px;
+      box-shadow: 0 0 15px #FF9F1C;
     }
   </style>
 </head>
@@ -87,7 +90,7 @@
 
   <div id="start-screen">
     <h1>Debunk Dash</h1>
-    <p>Look at each post or image and decide what to do. You have 40 seconds!</p>
+    <p>Spot the truth. Dodge the lies. Think fast or get fooled.</p>
     <button id="start-btn">Start Game!</button>
   </div>
 
@@ -104,61 +107,60 @@
   </div>
 
   <script>
-    const questions = [
-      {
-        text: "This viral image claims to show a new planet visible from Earth. Is it real?",
-        media: "https://www.earth.com/assets/_next/image/?url=https%3A%2F%2Fcff2.earth.com%2Fuploads%2F2025%2F03%2F18072736%2Fsuper-venus_Enaiposha_GJ-1214b_credit-NASA_1m-1400x850.jpg&w=1200&q=75",
-        correct: "verify"
-      },
-      {
-        text: "The National Institute on Aging posted an infographic.",
-        media: "https://www.nia.nih.gov/sites/default/files/2023-01/difference-cold-flu-covid-19.png",
-        correct: "trust"
-      },
-      {
-        text: "A tweet says that insulin is now free. What should you do?",
-        media: "https://img.semafor.com/b9b8145dc9444b5be8ce02e28130b19cc45e7fee-5500x3359.png?w=1920&q=75&auto=format",
-        correct: "reject"
-      },
-      {
-        text: "This Instagram post by the NBA declares that the Boston Celtics won the championship. Is this a trusted source?",
-        media: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbncAR3wIXz0ZPWzd_2kEDQIQBfWYCuKBMIw&s",
-        correct: "trust"
-      },
-      {
-        text: "The Pew Research Center posted this visualization regarding unemployment rates.",
-        media: "https://www.pewresearch.org/wp-content/uploads/sites/20/2013/08/FT_13.08.202_BlackWhiteUnemployment.png",
-        correct: "verify"
-      },
-      {
-        text: "A news outlet posted this ground-breaking information.",
-        media: "https://time.com/redesign/_next/image/?url=https%3A%2F%2Fapi.time.com%2Fwp-content%2Fuploads%2F2025%2F04%2FTIM250512-Wolf-Cover-FINAL.jpg&w=3840&q=75",
-        correct: "verify"
-      },
-      {
-        text: "The Hacker News posted an article explaining a new phishing attack that sends online users emails that look like Google. Is this trustworthy?",
-        media: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiooJOuE7X8Hqy2CETHt5pV6Rb82Ofiqwco234N6vZWXTxRslxkOqQ5l49DWdJfXs3hr2GfzPjuuCZQGDbJr1BrrrAJWKMuRogWdTQVQbWmyoXmm_KmvrA62xhlCcYRANijjgLKmUvyhPs800VU-huHm5_xGb_wCb3rvacmHRRXYtacpJKx4wf14IZlugwi/s728-rw-e365/gmail.jpg",
-        correct: "reject"
-      },
-      {
-        text: "You opened Twitter and found this.",
-        media: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZkB_uE24xdC6Aqnsr_VBDmtAO7kPe81NzhQ&s",
-        correct: "verify"
-      },
-      {
-        text: "While scrolling through Reddit, you found this statistic.",
-        media: "https://web.stevenson.edu/mbranson/m4tp/version1/fake-news/images/robberies.png",
-        correct: "reject"
-      },
-      {
-        text: "Lebron James requests to be traded in a twitter post.",
-        media: "https://www.casino.org/news/wp-content/uploads/2022/11/lebron.jpg",
-        correct: "reject"
-      }
-    ];
+const questions = [
+  {
+    text: "This viral image claims to show a new planet visible from Earth. Is it real?",
+    media: "https://www.earth.com/assets/_next/image/?url=https%3A%2F%2Fcff2.earth.com%2Fuploads%2F2025%2F03%2F18072736%2Fsuper-venus_Enaiposha_GJ-1214b_credit-NASA_1m-1400x850.jpg&w=1200&q=75",
+    correct: "verify"
+  },
+  {
+    text: "The National Institute on Aging posted an infographic.",
+    media: "https://www.nia.nih.gov/sites/default/files/2023-01/difference-cold-flu-covid-19.png",
+    correct: "trust"
+  },
+  {
+    text: "A tweet says that insulin is now free. What should you do?",
+    media: "https://img.semafor.com/b9b8145dc9444b5be8ce02e28130b19cc45e7fee-5500x3359.png?w=1920&q=75&auto=format",
+    correct: "reject"
+  },
+  {
+    text: "This Instagram post by the NBA declares that the Boston Celtics won the championship. Is this a trusted source?",
+    media: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbncAR3wIXz0ZPWzd_2kEDQIQBfWYCuKBMIw&s",
+    correct: "trust"
+  },
+  {
+    text: "The Pew Research Center posted this visualization regarding unemployment rates.",
+    media: "https://www.pewresearch.org/wp-content/uploads/sites/20/2013/08/FT_13.08.202_BlackWhiteUnemployment.png",
+    correct: "verify"
+  },
+  {
+    text: "A news outlet posted this ground-breaking information.",
+    media: "https://time.com/redesign/_next/image/?url=https%3A%2F%2Fapi.time.com%2Fwp-content%2Fuploads%2F2025%2F04%2FTIM250512-Wolf-Cover-FINAL.jpg&w=3840&q=75",
+    correct: "verify"
+  },
+  {
+    text: "The Hacker News posted an article explaining a new phishing attack that sends online users emails that look like Google. Is this trustworthy?",
+    media: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiooJOuE7X8Hqy2CETHt5pV6Rb82Ofiqwco234N6vZWXTxRslxkOqQ5l49DWdJfXs3hr2GfzPjuuCZQGDbJr1BrrrAJWKMuRogWdTQVQbWmyoXmm_KmvrA62xhlCcYRANijjgLKmUvyhPs800VU-huHm5_xGb_wCb3rvacmHRRXYtacpJKx4wf14IZlugwi/s728-rw-e365/gmail.jpg",
+    correct: "reject"
+  },
+  {
+    text: "You opened Twitter and found this.",
+    media: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZkB_uE24xdC6Aqnsr_VBDmtAO7kPe81NzhQ&s",
+    correct: "verify"
+  },
+  {
+    text: "While scrolling through Reddit, you found this statistic.",
+    media: "https://web.stevenson.edu/mbranson/m4tp/version1/fake-news/images/robberies.png",
+    correct: "reject"
+  },
+  {
+    text: "Lebron James requests to be traded in a twitter post.",
+    media: "https://www.casino.org/news/wp-content/uploads/2022/11/lebron.jpg",
+    correct: "reject"
+  }
+];
 
     const choices = ["trust", "reject", "verify"];
-
     let score = 0;
     let timeLeft = 40;
     let timer;
