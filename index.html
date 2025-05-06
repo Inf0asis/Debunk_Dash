@@ -26,7 +26,7 @@
     #start-screen, #game-container, #end-screen {
       max-width: 600px;
       width: 100%;
-      background: rgba(46, 0, 62, 0.85); /* translucent purple */
+      background: rgba(46, 0, 62, 0.85);
       padding: 20px;
       border-radius: 12px;
       box-shadow: 0 0 20px #FF9F1C;
@@ -84,6 +84,16 @@
       margin-bottom: 15px;
       box-shadow: 0 0 15px #FF9F1C;
     }
+
+    #answer-review {
+      text-align: left;
+      margin-top: 20px;
+      color: #fff;
+    }
+
+    #answer-review p {
+      margin-bottom: 15px;
+    }
   </style>
 </head>
 <body>
@@ -103,62 +113,63 @@
   <div id="end-screen">
     <h2>Time’s Up!</h2>
     <p>Your Score: <span id="final-score"></span></p>
+    <div id="answer-review"></div>
     <button id="restart-btn">Play Again</button>
   </div>
 
   <script>
-const questions = [
-  {
-    text: "This viral image claims to show a new planet visible from Earth. Is it real?",
-    media: "https://www.earth.com/assets/_next/image/?url=https%3A%2F%2Fcff2.earth.com%2Fuploads%2F2025%2F03%2F18072736%2Fsuper-venus_Enaiposha_GJ-1214b_credit-NASA_1m-1400x850.jpg&w=1200&q=75",
-    correct: "verify"
-  },
-  {
-    text: "The National Institute on Aging posted an infographic.",
-    media: "https://www.nia.nih.gov/sites/default/files/2023-01/difference-cold-flu-covid-19.png",
-    correct: "trust"
-  },
-  {
-    text: "A tweet says that insulin is now free. What should you do?",
-    media: "https://img.semafor.com/b9b8145dc9444b5be8ce02e28130b19cc45e7fee-5500x3359.png?w=1920&q=75&auto=format",
-    correct: "reject"
-  },
-  {
-    text: "This Instagram post by the NBA declares that the Boston Celtics won the championship. Is this a trusted source?",
-    media: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbncAR3wIXz0ZPWzd_2kEDQIQBfWYCuKBMIw&s",
-    correct: "trust"
-  },
-  {
-    text: "The Pew Research Center posted this visualization regarding unemployment rates.",
-    media: "https://www.pewresearch.org/wp-content/uploads/sites/20/2013/08/FT_13.08.202_BlackWhiteUnemployment.png",
-    correct: "verify"
-  },
-  {
-    text: "A news outlet posted this ground-breaking information.",
-    media: "https://time.com/redesign/_next/image/?url=https%3A%2F%2Fapi.time.com%2Fwp-content%2Fuploads%2F2025%2F04%2FTIM250512-Wolf-Cover-FINAL.jpg&w=3840&q=75",
-    correct: "verify"
-  },
-  {
-    text: "The Hacker News posted an article explaining a new phishing attack that sends online users emails that look like Google. Is this trustworthy?",
-    media: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiooJOuE7X8Hqy2CETHt5pV6Rb82Ofiqwco234N6vZWXTxRslxkOqQ5l49DWdJfXs3hr2GfzPjuuCZQGDbJr1BrrrAJWKMuRogWdTQVQbWmyoXmm_KmvrA62xhlCcYRANijjgLKmUvyhPs800VU-huHm5_xGb_wCb3rvacmHRRXYtacpJKx4wf14IZlugwi/s728-rw-e365/gmail.jpg",
-    correct: "reject"
-  },
-  {
-    text: "You opened Twitter and found this.",
-    media: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZkB_uE24xdC6Aqnsr_VBDmtAO7kPe81NzhQ&s",
-    correct: "verify"
-  },
-  {
-    text: "While scrolling through Reddit, you found this statistic.",
-    media: "https://web.stevenson.edu/mbranson/m4tp/version1/fake-news/images/robberies.png",
-    correct: "reject"
-  },
-  {
-    text: "Lebron James requests to be traded in a twitter post.",
-    media: "https://www.casino.org/news/wp-content/uploads/2022/11/lebron.jpg",
-    correct: "reject"
-  }
-];
+    const questions = [
+      {
+        text: "This viral image claims to show a new planet visible from Earth. Is it real?",
+        media: "https://www.earth.com/assets/_next/image/?url=https%3A%2F%2Fcff2.earth.com%2Fuploads%2F2025%2F03%2F18072736%2Fsuper-venus_Enaiposha_GJ-1214b_credit-NASA_1m-1400x850.jpg&w=1200&q=75",
+        correct: "verify"
+      },
+      {
+        text: "The National Institute on Aging posted an infographic.",
+        media: "https://www.nia.nih.gov/sites/default/files/2023-01/difference-cold-flu-covid-19.png",
+        correct: "trust"
+      },
+      {
+        text: "A tweet says that insulin is now free. What should you do?",
+        media: "https://img.semafor.com/b9b8145dc9444b5be8ce02e28130b19cc45e7fee-5500x3359.png?w=1920&q=75&auto=format",
+        correct: "reject"
+      },
+      {
+        text: "This Instagram post by the NBA declares that the Boston Celtics won the championship. Is this a trusted source?",
+        media: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbncAR3wIXz0ZPWzd_2kEDQIQBfWYCuKBMIw&s",
+        correct: "trust"
+      },
+      {
+        text: "The Pew Research Center posted this visualization regarding unemployment rates.",
+        media: "https://www.pewresearch.org/wp-content/uploads/sites/20/2013/08/FT_13.08.202_BlackWhiteUnemployment.png",
+        correct: "trust"
+      },
+      {
+        text: "A news outlet posted this ground-breaking information.",
+        media: "https://time.com/redesign/_next/image/?url=https%3A%2F%2Fapi.time.com%2Fwp-content%2Fuploads%2F2025%2F04%2FTIM250512-Wolf-Cover-FINAL.jpg&w=3840&q=75",
+        correct: "verify"
+      },
+      {
+        text: "The Hacker News posted an article explaining a new phishing attack that sends online users emails that look like Google. Is this trustworthy?",
+        media: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiooJOuE7X8Hqy2CETHt5pV6Rb82Ofiqwco234N6vZWXTxRslxkOqQ5l49DWdJfXs3hr2GfzPjuuCZQGDbJr1BrrrAJWKMuRogWdTQVQbWmyoXmm_KmvrA62xhlCcYRANijjgLKmUvyhPs800VU-huHm5_xGb_wCb3rvacmHRRXYtacpJKx4wf14IZlugwi/s728-rw-e365/gmail.jpg",
+        correct: "verify"
+      },
+      {
+        text: "You opened Twitter and found this.",
+        media: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZkB_uE24xdC6Aqnsr_VBDmtAO7kPe81NzhQ&s",
+        correct: "reject"
+      },
+      {
+        text: "While scrolling through Reddit, you found this statistic.",
+        media: "https://web.stevenson.edu/mbranson/m4tp/version1/fake-news/images/robberies.png",
+        correct: "reject"
+      },
+      {
+        text: "Lebron James requests to be traded in a twitter post.",
+        media: "https://www.casino.org/news/wp-content/uploads/2022/11/lebron.jpg",
+        correct: "reject"
+      }
+    ];
 
     const choices = ["trust", "reject", "verify"];
     let score = 0;
@@ -166,6 +177,7 @@ const questions = [
     let timer;
     let currentQuestion = {};
     let remainingQuestions = [];
+    let results = [];
 
     const startBtn = document.getElementById("start-btn");
     const restartBtn = document.getElementById("restart-btn");
@@ -186,6 +198,7 @@ const questions = [
       gameContainer.style.display = "block";
       score = 0;
       timeLeft = 40;
+      results = [];
       remainingQuestions = [...questions];
       scoreDisplay.textContent = "Score: 0";
       timerDisplay.textContent = `Time Left: ${timeLeft}s`;
@@ -240,6 +253,12 @@ const questions = [
     }
 
     function handleAnswer(selected) {
+      results.push({
+        question: currentQuestion.text,
+        userAnswer: selected,
+        correctAnswer: currentQuestion.correct
+      });
+
       if (selected === currentQuestion.correct) {
         score++;
         scoreDisplay.textContent = `Score: ${score}`;
@@ -251,6 +270,20 @@ const questions = [
       gameContainer.style.display = "none";
       endScreen.style.display = "block";
       finalScore.textContent = score;
+
+      const answerReview = document.getElementById("answer-review");
+      answerReview.innerHTML = "<h3>Answer Review:</h3>";
+      results.forEach((item, index) => {
+        const isCorrect = item.userAnswer === item.correctAnswer;
+        answerReview.innerHTML += `
+          <p>
+            <strong>Q${index + 1}:</strong> ${item.question}<br/>
+            <span style="color: ${isCorrect ? '#4CAF50' : '#FF4D6D'};">
+              You answered: ${capitalize(item.userAnswer)} – ${isCorrect ? 'Correct ✅' : `Wrong ❌ (Correct: ${capitalize(item.correctAnswer)})`}
+            </span>
+          </p>
+        `;
+      });
     }
 
     function capitalize(str) {
