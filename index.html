@@ -84,19 +84,11 @@
       margin-bottom: 15px;
       box-shadow: 0 0 15px #FF9F1C;
     }
-
-    #answer-review {
-      text-align: left;
-      margin-top: 20px;
-      color: #fff;
-    }
-
-    #answer-review p {
-      margin-bottom: 15px;
-    }
   </style>
 </head>
 <body>
+
+  <audio id="bg-music" src="background.mp3" loop></audio>
 
   <div id="start-screen">
     <h1>Debunk Dash</h1>
@@ -113,7 +105,6 @@
   <div id="end-screen">
     <h2>Time’s Up!</h2>
     <p>Your Score: <span id="final-score"></span></p>
-    <div id="answer-review"></div>
     <button id="restart-btn">Play Again</button>
   </div>
 
@@ -135,7 +126,7 @@
         correct: "reject"
       },
       {
-        text: "This Instagram post by the NBA declares that the Boston Celtics won the championship. Is this a trusted source?",
+        text: "This Instagram post by the NBA declares that the Boston Celtics won the championship.",
         media: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbncAR3wIXz0ZPWzd_2kEDQIQBfWYCuKBMIw&s",
         correct: "trust"
       },
@@ -150,7 +141,7 @@
         correct: "verify"
       },
       {
-        text: "The Hacker News posted an article explaining a new phishing attack that sends online users emails that look like Google. Is this trustworthy?",
+        text: "The Hacker News explains a phishing attack using Google-like emails.",
         media: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiooJOuE7X8Hqy2CETHt5pV6Rb82Ofiqwco234N6vZWXTxRslxkOqQ5l49DWdJfXs3hr2GfzPjuuCZQGDbJr1BrrrAJWKMuRogWdTQVQbWmyoXmm_KmvrA62xhlCcYRANijjgLKmUvyhPs800VU-huHm5_xGb_wCb3rvacmHRRXYtacpJKx4wf14IZlugwi/s728-rw-e365/gmail.jpg",
         correct: "verify"
       },
@@ -165,7 +156,7 @@
         correct: "reject"
       },
       {
-        text: "Lebron James requests to be traded in a twitter post.",
+        text: "LeBron James requests to be traded in a tweet.",
         media: "https://www.casino.org/news/wp-content/uploads/2022/11/lebron.jpg",
         correct: "reject"
       }
@@ -177,7 +168,6 @@
     let timer;
     let currentQuestion = {};
     let remainingQuestions = [];
-    let results = [];
 
     const startBtn = document.getElementById("start-btn");
     const restartBtn = document.getElementById("restart-btn");
@@ -188,6 +178,7 @@
     const scoreDisplay = document.getElementById("score");
     const finalScore = document.getElementById("final-score");
     const questionBox = document.getElementById("question-box");
+    const bgMusic = document.getElementById("bg-music");
 
     startBtn.onclick = startGame;
     restartBtn.onclick = startGame;
@@ -198,10 +189,11 @@
       gameContainer.style.display = "block";
       score = 0;
       timeLeft = 40;
-      results = [];
       remainingQuestions = [...questions];
       scoreDisplay.textContent = "Score: 0";
       timerDisplay.textContent = `Time Left: ${timeLeft}s`;
+      bgMusic.volume = 0.4;
+      bgMusic.play();
       startTimer();
       nextQuestion();
     }
@@ -220,7 +212,6 @@
 
     function nextQuestion() {
       questionBox.innerHTML = "";
-
       if (remainingQuestions.length === 0) {
         clearInterval(timer);
         endGame();
@@ -253,12 +244,6 @@
     }
 
     function handleAnswer(selected) {
-      results.push({
-        question: currentQuestion.text,
-        userAnswer: selected,
-        correctAnswer: currentQuestion.correct
-      });
-
       if (selected === currentQuestion.correct) {
         score++;
         scoreDisplay.textContent = `Score: ${score}`;
@@ -270,20 +255,8 @@
       gameContainer.style.display = "none";
       endScreen.style.display = "block";
       finalScore.textContent = score;
-
-      const answerReview = document.getElementById("answer-review");
-      answerReview.innerHTML = "<h3>Answer Review:</h3>";
-      results.forEach((item, index) => {
-        const isCorrect = item.userAnswer === item.correctAnswer;
-        answerReview.innerHTML += `
-          <p>
-            <strong>Q${index + 1}:</strong> ${item.question}<br/>
-            <span style="color: ${isCorrect ? '#4CAF50' : '#FF4D6D'};">
-              You answered: ${capitalize(item.userAnswer)} – ${isCorrect ? 'Correct ✅' : `Wrong ❌ (Correct: ${capitalize(item.correctAnswer)})`}
-            </span>
-          </p>
-        `;
-      });
+      bgMusic.pause();
+      bgMusic.currentTime = 0;
     }
 
     function capitalize(str) {
