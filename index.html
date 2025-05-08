@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Debunk Dash – Retro</title>
+  <title>Debunk Dash – Final</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
   <style>
     body {
@@ -36,7 +36,7 @@
       display: none;
     }
 
-    #timer, #score {
+    #score {
       font-size: 1.1rem;
       margin-bottom: 10px;
     }
@@ -84,6 +84,16 @@
       margin-bottom: 15px;
       box-shadow: 0 0 15px #FF9F1C;
     }
+
+    #answer-review {
+      text-align: left;
+      margin-top: 20px;
+      color: #fff;
+    }
+
+    #answer-review p {
+      margin-bottom: 15px;
+    }
   </style>
 </head>
 <body>
@@ -92,19 +102,19 @@
 
   <div id="start-screen">
     <h1>Debunk Dash</h1>
-    <p>Spot the truth. Dodge the lies. Think fast or get fooled.</p>
+    <p>Spot the truth. Dodge the lies. No timer. Just your mind.</p>
     <button id="start-btn">Start Game!</button>
   </div>
 
   <div id="game-container">
-    <div id="timer">Time Left: 40s</div>
     <div id="score">Score: 0</div>
     <div id="question-box"></div>
   </div>
 
   <div id="end-screen">
-    <h2>Time’s Up!</h2>
+    <h2>All Done!</h2>
     <p>Your Score: <span id="final-score"></span></p>
+    <div id="answer-review"></div>
     <button id="restart-btn">Play Again</button>
   </div>
 
@@ -164,66 +174,58 @@
 
     const choices = ["trust", "reject", "verify"];
     let score = 0;
-    let timeLeft = 40;
-    let timer;
     let currentQuestion = {};
     let remainingQuestions = [];
+    let results = [];
 
     const startBtn = document.getElementById("start-btn");
     const restartBtn = document.getElementById("restart-btn");
     const gameContainer = document.getElementById("game-container");
     const startScreen = document.getElementById("start-screen");
     const endScreen = document.getElementById("end-screen");
-    const timerDisplay = document.getElementById("timer");
     const scoreDisplay = document.getElementById("score");
     const finalScore = document.getElementById("final-score");
     const questionBox = document.getElementById("question-box");
+    const answerReview = document.getElementById("answer-review");
     const bgMusic = document.getElementById("bg-music");
 
     startBtn.onclick = startGame;
     restartBtn.onclick = startGame;
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
 
     function startGame() {
       startScreen.style.display = "none";
       endScreen.style.display = "none";
       gameContainer.style.display = "block";
       score = 0;
-      timeLeft = 40;
+      results = [];
       remainingQuestions = [...questions];
+      shuffle(remainingQuestions);
       scoreDisplay.textContent = "Score: 0";
-      timerDisplay.textContent = `Time Left: ${timeLeft}s`;
       bgMusic.volume = 0.4;
       bgMusic.play();
-      startTimer();
       nextQuestion();
-    }
-
-    function startTimer() {
-      clearInterval(timer);
-      timer = setInterval(() => {
-        timeLeft--;
-        timerDisplay.textContent = `Time Left: ${timeLeft}s`;
-        if (timeLeft <= 0) {
-          clearInterval(timer);
-          endGame();
-        }
-      }, 1000);
     }
 
     function nextQuestion() {
       questionBox.innerHTML = "";
       if (remainingQuestions.length === 0) {
-        clearInterval(timer);
         endGame();
         return;
       }
 
-      const randomIndex = Math.floor(Math.random() * remainingQuestions.length);
-      currentQuestion = remainingQuestions.splice(randomIndex, 1)[0];
+      const current = remainingQuestions.pop();
+      currentQuestion = current;
 
-      if (currentQuestion.media) {
+      if (current.media) {
         const img = document.createElement("img");
-        img.src = currentQuestion.media;
+        img.src = current.media;
         img.alt = "";
         img.classList.add("question-img");
         questionBox.appendChild(img);
@@ -231,7 +233,7 @@
 
       const qText = document.createElement("p");
       qText.id = "question-text";
-      qText.textContent = currentQuestion.text;
+      qText.textContent = current.text;
       questionBox.appendChild(qText);
 
       choices.forEach(choice => {
@@ -244,10 +246,19 @@
     }
 
     function handleAnswer(selected) {
-      if (selected === currentQuestion.correct) {
+      const isCorrect = selected === currentQuestion.correct;
+      results.push({
+        question: currentQuestion.text,
+        userAnswer: selected,
+        correctAnswer: currentQuestion.correct,
+        isCorrect
+      });
+
+      if (isCorrect) {
         score++;
         scoreDisplay.textContent = `Score: ${score}`;
       }
+
       nextQuestion();
     }
 
@@ -257,6 +268,18 @@
       finalScore.textContent = score;
       bgMusic.pause();
       bgMusic.currentTime = 0;
+
+      answerReview.innerHTML = "<h3>Answer Review:</h3>";
+      results.forEach((item, index) => {
+        answerReview.innerHTML += `
+          <p>
+            <strong>Q${index + 1}:</strong> ${item.question}<br/>
+            <span style="color: ${item.isCorrect ? '#4CAF50' : '#FF4D6D'};">
+              You answered: ${capitalize(item.userAnswer)} – ${item.isCorrect ? 'Correct ✅' : `Wrong ❌ (Correct: ${capitalize(item.correctAnswer)})`}
+            </span>
+          </p>
+        `;
+      });
     }
 
     function capitalize(str) {
